@@ -1,0 +1,62 @@
+[build-system]
+requires = ["setuptools>=64", "setuptools_scm>=8"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ftdinosaur_inference"
+version = "0.0.1"
+description = "Run inference on FT-DINOSAUR models"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {file = "LICENSE.txt"}
+authors = [
+  {name = "Maximilian Seitzer", email = "maximilian.seitzer@uni-tuebingen.de" },
+  {name = "Aniket Didolkar" },
+]
+maintainers = [
+  {name = "Maximilian Seitzer", email = "maximilian.seitzer@uni-tuebingen.de" }
+]
+
+dependencies = [
+  "torch >= 2.2.0",
+  "torchvision >= 0.17.0"
+]
+
+[project.optional-dependencies]
+dev = [
+  "pre-commit == 3.5.0",
+  "black == 24.4.2",
+  "ruff == 0.4.8"
+]
+notebook = [
+  "notebook",
+  "matplotlib",
+  "pillow"
+]
+
+[tool.setuptools]
+packages = ["ftdinosaur_inference"]
+
+[tool.black]
+preview = true
+target-version = ["py311"]
+
+[tool.ruff]
+target-version = "py311"
+
+lint.select = [
+    "F", # pyflakes
+    "E", # pycodestyle
+    "W", # pycodestyle
+    "I", # isort
+    "A", # builtins
+    "FA", # future-annotations
+    "PT", # pytest-style
+    "RUF100",  # unused 'noqa' directive
+]
+lint.ignore = [
+    "E501",  # line too long (mostly handled by black)
+    "E731",  # Do not use a lambda expression use a def (local def is often ugly)
+    "PT011",  # pytest-raises-too-broad (use `match` parameter)
+    "SIM108",  # Use ternary operator instead of if-else-block
+]
