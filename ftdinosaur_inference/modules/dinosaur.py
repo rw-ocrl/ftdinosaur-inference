@@ -1,7 +1,7 @@
 """DINOSAUR model."""
 
 from functools import partial
-from typing import Dict, Optional
+from typing import Any, Dict, Optional
 
 import torch
 from torch import nn
@@ -42,26 +42,56 @@ class DINOSAUR(nn.Module):
         self,
         images: torch.Tensor,
         num_slots: Optional[int] = None,
-        decoder_top_k: Optional[int] = None,
+        slot_init: Optional[torch.Tensor] = None,
+        decode: bool = True,
+        decoder_kwargs: Optional[Dict[str, Any]] = None,
     ) -> Dict[str, torch.Tensor]:
-        assert (
-            images.ndim == 4
-        ), "Input must have shape (batch, channels, height, width)"
+        """Run model.
+
+        Args:
+            images: Tensor with images of shape (batch, channels, height, width).
+            num_slots: Number of slots to use. If not given, use model default.
+            initial_slots: Optional tensor with slot init of (batch, num_slots, slot_dim).
+                If not given, sample random slots.
+            decode: If true, run decoder and return decoder outputs.
+            decoder_kwargs: Optional keyword arguments to the decoder.
+
+        """
+        if images.ndim != 4:
+            raise ValueError("Images must have shape (batch, channels, height, width)")
+
+        if slot_init is None:
+            slot_init = self.slot_init(len(images), num_slots)
+        else:
+            if slot_init.ndim != 3:
+                raise ValueError(
+                    "`slot_init` must have shape (batch, num_slots, slot_dim)"
+                )
+            if len(slot_init) != len(images):
+                raise ValueError(
+                    f"`slot_init` must match image batch size of {len(images)}, "
+                    f"but got {len(slot_init)}"
+                )
 
         features = self.encoder(images)
-        initial_slots = self.slot_init(len(features), num_slots)
-        slots, slot_masks = self.slot_attention(features, initial_slots)
-        pred_features, decoder_masks = self.decoder(
-            slots, masks=slot_masks, top_k=decoder_top_k
-        )
-
-        return {
+        slots, slot_masks = self.slot_attention(features, slot_init)
+        output = {
             "features": features,
+            "slot_init": slot_init,
             "slots": slots,
             "slot_masks": slot_masks,
-            "pred_features": pred_features,
-            "masks": decoder_masks,
         }
+
+        if decode:
+            pred_features, decoder_masks = self.decoder(
+                slots,
+                masks=slot_masks,
+                **decoder_kwargs if decoder_kwargs else {},
+            )
+            output["pred_features"] = pred_features
+            output["masks"] = decoder_masks
+
+        return output
 
 
 def build(

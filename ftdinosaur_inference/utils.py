@@ -8,22 +8,30 @@ IMAGENET_MEAN = (0.485, 0.456, 0.406)
 IMAGENET_STD = (0.229, 0.224, 0.225)
 
 
-def build_preprocessing(input_size: int, center_crop: bool = False) -> torch.nn.Module:
+def build_preprocessing(
+    input_size: Union[int, Tuple[int, int]],
+    input_mean: Tuple[float, float, float],
+    input_std: Tuple[float, float, float],
+    center_crop: bool = False,
+) -> torch.nn.Module:
     """Build preprocessing pipeline for input images.
 
     Make sure `input_size` matches the resolution the model was trained on.
     """
+    if isinstance(input_size, int):
+        input_size = (input_size, input_size)
+
     return tvt.Compose(
         [
             tvt.ToImage(),
             tvt.Resize(
-                size=(input_size, input_size),
+                size=(input_size[0], input_size[1]),
                 interpolation=tvt.InterpolationMode.BICUBIC,
                 antialias=True,
             ),
             tvt.CenterCrop(input_size) if center_crop else torch.nn.Identity(),
             tvt.ToDtype(torch.float32, scale=True),
-            tvt.Normalize(mean=IMAGENET_MEAN, std=IMAGENET_STD),
+            tvt.Normalize(mean=input_mean, std=input_std),
         ]
     )
 
