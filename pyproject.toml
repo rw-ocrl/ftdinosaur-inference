@@ -10,8 +10,7 @@ readme = "README.md"
 requires-python = ">=3.8"
 license = {file = "LICENSE.txt"}
 authors = [
-  {name = "Maximilian Seitzer", email = "maximilian.seitzer@uni-tuebingen.de" },
-  {name = "Aniket Didolkar" },
+  {name = "Maximilian Seitzer", email = "maximilian.seitzer@uni-tuebingen.de" }
 ]
 maintainers = [
   {name = "Maximilian Seitzer", email = "maximilian.seitzer@uni-tuebingen.de" }
@@ -26,7 +25,8 @@ dependencies = [
 dev = [
   "pre-commit == 3.5.0",
   "black[jupyter] == 24.4.2",
-  "ruff == 0.4.8"
+  "ruff == 0.4.8",
+  "pytest == 8.2.2",
 ]
 notebook = [
   "notebook",
