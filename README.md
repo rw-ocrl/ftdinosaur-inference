@@ -9,6 +9,8 @@ Simply install the package using pip:
 pip install .
 ```
 
+We recommend using an environment manager like virtualenv or conda.
+
 ## Quick Start
 
 Import the package and print the list of defined models:
@@ -83,6 +85,18 @@ pip install .[dev]
 
 Tests can be run using `pytest`. The codebase uses `pre-commit` to manage linting.
 
+## Citation
+
+If you make use of this work, please cite us:
+
+```
+@misc{Didolkar2024ZeroShotOCRL,
+  title={Zero-Shot Object-Centric Representation Learning},
+  author={Didolkar, Aniket and Zadaianchuk, Andrii and Goyal, Anirudh and Mozer, Mike and Bengio, Yoshua and Martius, Georg and Seitzer, Maximilian},
+  year={2024},
+}
+```
+
 ## Licenses
 
 This codebase is released under Apache License 2.0.
@@ -92,4 +106,5 @@ The concerned source files contain a note of their origin.
 Both are released under Apache License 2.0.
 We like to thank their authors!
 
-The [*"Gizmos" image*](notebooks/images/gizmos.jpg) is from [Greff, van Steenkiste, Schmidhuber, 2020: On the Binding Problem in Artificial Neural Networks](https://arxiv.org/abs/2012.05208), under CC BY-SA 4.0 license.
+The [*example image*](notebooks/images/example.jpg) is from the [COCO dataset](https://cocodataset.org/#explore?id=442321), originally from [Flickr](http://farm8.staticflickr.com/7003/6649994945_c5e92895f7_z.jpg), under [CC BY-NC-SA 2.0 license](https://creativecommons.org/licenses/by-nc-sa/2.0/).
+The [*"Gizmos" image*](notebooks/images/gizmos.jpg) is from [Greff, van Steenkiste, Schmidhuber, 2020: On the Binding Problem in Artificial Neural Networks](https://arxiv.org/abs/2012.05208), under [CC BY-SA 4.0 license](https://creativecommons.org/licenses/by-sa/4.0/).
