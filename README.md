@@ -1,5 +1,7 @@
 # FT-DINOSAUR Inference
 
+This repository contains inference code for the FT-DINOSAUR model introduced in [Zero-Shot Object-Centric Representation Learning](https://arxiv.org/abs/2408.09162).
+
 ## Setup
 
 This package only requires `torch` and `torchvision` as dependencies.
@@ -90,10 +92,12 @@ Tests can be run using `pytest`. The codebase uses `pre-commit` to manage lintin
 If you make use of this work, please cite us:
 
 ```
-@misc{Didolkar2024ZeroShotOCRL,
+@article{Didolkar2024ZeroShotOCRL,
   title={Zero-Shot Object-Centric Representation Learning},
   author={Didolkar, Aniket and Zadaianchuk, Andrii and Goyal, Anirudh and Mozer, Mike and Bengio, Yoshua and Martius, Georg and Seitzer, Maximilian},
   year={2024},
+  journal={arXiv:2408.09162},
+  url={https://arxiv.org/abs/2408.09162}
 }
 ```
 
